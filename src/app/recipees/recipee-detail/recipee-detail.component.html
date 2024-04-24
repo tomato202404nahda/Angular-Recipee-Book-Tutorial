@@ -1,0 +1,44 @@
+<div *ngIf="recipee!== undefined else noRecipee">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <img style="height: 400px;" class="img-responsive" src="{{recipee.imagePath}}" alt="">
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-xs-12">
+        <h1>{{recipee.name}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs 12">
+        <div appDropdown class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle">Manage Recipee <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a (click)="onAddToShoppingList()" style="cursor: pointer" >Add Ingredients to Shopping List</a></li>
+                <li [routerLink]="['../', id+1, 'edit']" style="cursor:pointer"><a >Edit Recipee</a></li>
+                <li style="cursor:pointer"><a >Delete Recipee</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+   
+        {{recipee.description}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let ingredient of recipee.ingredients">
+                {{ingredient.name}} - {{ingredient.amount}}
+            </li>
+        </ul>
+        
+    </div>
+</div>
+</div>
+<ng-template #noRecipee>
+    <p>Select a recipee</p>
+</ng-template>
