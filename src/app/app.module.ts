@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipeeResolverService } from './recipees/recipee-detail/recipee-resolver.service';
 import { RecipeeStartComponent } from './recipees/recipee-start/recipee-start.component';
 import { RecipeeEditComponent } from './recipees/recipee-edit/recipee-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RecipeeEditComponent } from './recipees/recipee-edit/recipee-edit.compo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     ShoppingListService,
