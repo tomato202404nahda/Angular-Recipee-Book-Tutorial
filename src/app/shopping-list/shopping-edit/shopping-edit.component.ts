@@ -12,8 +12,11 @@ import { Subscription } from 'rxjs';
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
+  @ViewChild('f') shoppingListForm!: NgForm;
+
   editMode = false;
-  itemEdited!: number;
+  itemEditedIndex!: number;
+  editedItem!: Ingredient;
 
 
   constructor(private shoppingListService: ShoppingListService){
@@ -23,8 +26,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription =  this.shoppingListService.startedEditing.subscribe(
       (index)=>{
-        this.itemEdited = index;
+        this.itemEditedIndex = index;
         this.editMode = true;
+        this.editedItem = this.shoppingListService.getIngredient(index);
+        this.shoppingListForm.setValue({
+          name: this.editedItem.name,
+          amount: this.editedItem.amount,
+        })
       }
     )
   }
@@ -34,18 +42,36 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   /* @Output() ingredientAdded = new EventEmitter<Ingredient>(); */
 
-  
-  onDeleteItem() {
-  throw new Error('Method not implemented.');
+  onClear(){
+    this.shoppingListForm.reset();
+    this.editMode=false;
+  }
+
+  onDeleteItem(index: number) {
+    this.onClear();
+    this.shoppingListService.deleteIngredients(index);
   }
   onAddItem(form: NgForm) {
     const value = form.value
     /* const newIngredient = new Ingredient(
       this.nameInputRef.nativeElement.value, 
       this.amountInputRef.nativeElement.value); */
-    const newIngredient = new Ingredient(value.name, value.amount);
+      const newIngredient = new Ingredient(value.name, value.amount);
+    if(this.editMode){
+      /* const value = form.value
+      this.shoppingListService.getIngredient(this.itemEditedIndex).name=value.name;
+      this.shoppingListService.getIngredient(this.itemEditedIndex).amount=value.amount; */
+      this.shoppingListService.updateIngredients(this.itemEditedIndex, newIngredient)
+    }
+    else {
+      
       this.shoppingListService.addIngredient(newIngredient);
-/*       this.ingredientAdded.emit(newIngredient); */
+      /*       this.ingredientAdded.emit(newIngredient); */
+    }
+    this.editMode=false;
+    this.shoppingListForm.reset()
   }
+  
+  
 
 }

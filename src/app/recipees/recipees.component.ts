@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './recipees.component.html',
   styleUrls: ['./recipees.component.css'],
   providers: [
-    RecipeeService
+    
   ]
 })
 export class RecipeesComponent implements OnInit, OnDestroy {

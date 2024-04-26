@@ -28,5 +28,8 @@ export class RecipeeDetailComponent implements OnInit {
   onAddToShoppingList() {
     this.recipeeService.addIngredientsToShoppingList(this.recipee!.ingredients);
     }
-  
+    onDeleteRecipee(id: number){
+      this.recipeeService.removeRecipee(id);
+      this.router.navigate(['../'])
+    }
 }
