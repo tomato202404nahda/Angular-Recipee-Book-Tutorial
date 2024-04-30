@@ -4,6 +4,7 @@ import { Recipee } from '../recipee.model';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeeService } from '../recipee.service';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipee-edit',
@@ -15,7 +16,7 @@ export class RecipeeEditComponent implements OnInit {
   editMode = false;
   recipeeForm!: FormGroup;
 
-  constructor(private currentRoute: ActivatedRoute, private recipeeService: RecipeeService, private router: Router){
+  constructor(private dataStorageService: DataStorageService, private currentRoute: ActivatedRoute, private recipeeService: RecipeeService, private router: Router){
       
   }
   ngOnInit(): void {
@@ -82,6 +83,7 @@ export class RecipeeEditComponent implements OnInit {
       this.router.navigate(['../'], {relativeTo: this.currentRoute})
     }else{
       this.recipeeService.addRecipee(newRecipee);
+      this.dataStorageService.storeRecipees().subscribe();
       this.router.navigate(['../'])
     }
   }

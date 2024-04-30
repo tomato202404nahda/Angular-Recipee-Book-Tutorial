@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Recipee } from '../recipee.model';
 import { RecipeeService } from '../recipee.service';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipee-detail',
@@ -12,7 +13,7 @@ export class RecipeeDetailComponent implements OnInit {
   recipee!: Recipee;
   id!: number;
 
-  constructor(private recipeeService: RecipeeService, private currentRoute: ActivatedRoute, private router: Router){
+  constructor(private recipeeService: RecipeeService, private currentRoute: ActivatedRoute, private router: Router, public dataService: DataStorageService){
 
   }
   ngOnInit(): void {
@@ -31,5 +32,7 @@ export class RecipeeDetailComponent implements OnInit {
     onDeleteRecipee(id: number){
       this.recipeeService.removeRecipee(id);
       this.router.navigate(['../'])
+      this.dataService.storeRecipees().subscribe();
+      
     }
 }
