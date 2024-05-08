@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeesComponent } from './recipees/recipees.component';
@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipeeResolverService } from './recipees/recipee-detail/recipee-resolver.service';
 import { RecipeeStartComponent } from './recipees/recipee-start/recipee-start.component';
 import { RecipeeEditComponent } from './recipees/recipee-edit/recipee-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecipeeService } from './recipees/recipee.service';
 
 @NgModule({
   declarations: [
@@ -32,11 +34,15 @@ import { RecipeeEditComponent } from './recipees/recipee-edit/recipee-edit.compo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     ShoppingListService,
-    RecipeeResolverService
+    RecipeeResolverService,
+    RecipeeService
   ],
   bootstrap: [AppComponent]
 })

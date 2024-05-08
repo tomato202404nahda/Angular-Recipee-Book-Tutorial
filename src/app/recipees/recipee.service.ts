@@ -7,9 +7,11 @@ import { Subject } from "rxjs";
 @Injectable()
 export class RecipeeService{
     
+    
+    recipeesChanged = new Subject<Recipee[]>();
     selectedRecipee = new Subject<Recipee>();
     private recipees: Recipee[] = [
-        new Recipee(
+        /* new Recipee(
             'Birria',
             'Mexican Dish', 
             'https://www.isabeleats.com/wp-content/uploads/2023/06/birria-small-12.jpg',
@@ -33,7 +35,7 @@ export class RecipeeService{
                 new Ingredient('Lemon juice', 1),
                 new Ingredient('Salt', 2),
             ]
-        )
+        ) */
       ];
 
     constructor(private slService: ShoppingListService){
@@ -43,8 +45,9 @@ export class RecipeeService{
         return this.recipees.slice();
     }
     
-    setRecipees(){
-
+    setRecipees(recipees: Recipee[]){
+        this.recipees = recipees;
+        this.recipeesChanged.next(recipees);
     }
 
     addIngredientsToShoppingList(ingredients: Ingredient[]){
@@ -55,4 +58,18 @@ export class RecipeeService{
         const recipee = this.recipees[index];
         return recipee;
     }
+    addRecipee(recipee: Recipee){
+        this.recipees.push(recipee);
+        this.recipeesChanged.next(this.recipees);
+    }
+
+    updateRecipee(index: number, newRecipee: Recipee){
+        this.recipees[index] = newRecipee;
+        this.recipeesChanged.next(this.recipees);
+       
+    }
+    removeRecipee(id: number) {
+        this.recipees.splice(id, 1);
+        this.recipeesChanged.next(this.recipees);
+      }
 }
